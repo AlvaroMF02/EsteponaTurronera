@@ -11,7 +11,7 @@ public class TuEresMiDulce {
     public static void main(String[] args) {
 
         //VARIABLES
-        double manoObra = 0.1;  //LO HE PUESTO EN EL MINIMO PQ SI :)
+        double manoObra = 0.1;
         double materiaPrima;
         double precioVentaUnit;
         double costeProduccion;
@@ -28,7 +28,7 @@ public class TuEresMiDulce {
                       **********************************
                       """;
 
-        
+        //CREAR UN IF NUEVO PARA QUE CUANDO EL CODIGO SEA ERRONEO SE TERMINE Y O INFORME
         
         //MOSTRAR EL MENU
         pedido = (JOptionPane.showInputDialog(menu));
