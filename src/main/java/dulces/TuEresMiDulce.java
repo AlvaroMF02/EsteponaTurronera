@@ -11,10 +11,11 @@ public class TuEresMiDulce {
     public static void main(String[] args) {
 
         //VARIABLES
-        double manoObra = 0.1;
+        double costeManoObra;
         double materiaPrima;
         double precioVentaUnit;
         double costeProduccion;
+        double unidadesBeneficio;
         String pedido = "";
         String menu = """
                       **********************************
@@ -28,82 +29,104 @@ public class TuEresMiDulce {
                       **********************************
                       """;
 
-        //CREAR UN IF NUEVO PARA QUE CUANDO EL CODIGO SEA ERRONEO SE TERMINE Y O INFORME
-        
         //MOSTRAR EL MENU
         pedido = (JOptionPane.showInputDialog(menu));
 
-        //SACAR MATERIA PRIMA PARA CALCULAR EL COSTE DE PRODUCCION
-        materiaPrima = Double.parseDouble(JOptionPane.showInputDialog
+        if (pedido.equals("M1") || pedido.equals("P1") || 
+                pedido.equals("T1") || pedido.equals("T2") || 
+                pedido.equals("M2")) {
+
+            //SACAR MATERIA PRIMA PARA CALCULAR EL COSTE DE PRODUCCION
+            materiaPrima = Double.parseDouble(JOptionPane.showInputDialog
         ("¿Cuál será el coste de la materia prima?"));
 
-        
-        
-        //AQUI EMPIEZA TODO EL PROGRAMA
-        if (materiaPrima > 0.1 && materiaPrima <= 1) {
+            if (materiaPrima > 0.1 && materiaPrima <= 1) {
 
-            
-            
-            
-            
-            
-            //CALCULAR MANO DE OBRA
-            manoObra = (pedido.equalsIgnoreCase("m1")
-                    || pedido.equalsIgnoreCase("p1")) ? 0.15 : 0.22;
-            
-            
-            //COSTEPRODUCCION = MATERIAPRIMA + MANOOBRA
-            costeProduccion = materiaPrima + manoObra;
-            //QUITAR DECIMALES
-            Math.round(costeProduccion * 100);
-            JOptionPane.showMessageDialog(null, "COSTE PRODUCCIÓN "+costeProduccion);
-            
-            
-            
-            
-//            //VENTA UNITARIO
-//            switch (pedido) {
-//                case "M1","P2","P1":
-//                    //Precio de venta unitario = coste de producción + 50 % del coste de producción
-//                    precioVentaUnit = costeProduccion + (costeProduccion*0.5);
-//                    JOptionPane.showMessageDialog(null, precioVentaUnit);
-//                    break;
-//
-//                case "T1","T2","M2":
-//                    //Precio de venta unitario = coste de producción + 65 % del coste de producción
-//                    precioVentaUnit = costeProduccion + (costeProduccion*0.65);
-//                    JOptionPane.showMessageDialog(null, precioVentaUnit);
-//                    break;
-//            }
+                switch (pedido) {
+                    case "M1" -> {
+                        costeManoObra = 0.15;
+                        costeProduccion = materiaPrima + costeManoObra;
+                        precioVentaUnit = costeProduccion + (costeProduccion * 0.5);
+                        JOptionPane.showMessageDialog(null, 
+                                "PRECIO VENTA POR UNIDAD " + String.format("%.2f", precioVentaUnit));
+                        JOptionPane.showMessageDialog(null, 
+                                "COSTE DE PRODUCCIÓN " + String.format("%.2f", costeProduccion));
+                        //CALCULO PARA LLEGAR A LOS 2500
+                        unidadesBeneficio = 2500 / precioVentaUnit;
+                        JOptionPane.showMessageDialog(null, 
+                                "PARA LLEGAR A LOS 2500€ DEBES VENDER " + Math.ceil(unidadesBeneficio) + " UNIDADES");
 
-            //CON IF ELSE PUEDO ESCRIBIR LOS PEDIDOS EN MINUSCULA
-            if (pedido.equalsIgnoreCase("m1") || 
-                    pedido.equalsIgnoreCase("p2") || 
-                    pedido.equalsIgnoreCase("p1")) {
-                    
-                    //Precio de venta unitario = coste de producción + 50 % del coste de producción
-                    precioVentaUnit = costeProduccion + (costeProduccion*0.5);
-                    Math.round(precioVentaUnit * 10);
-                    JOptionPane.showMessageDialog(null, "PRECIO VENTA POR UNIDAD "+ precioVentaUnit);
-                
-            } else if (pedido.equalsIgnoreCase("t1") || 
-                    pedido.equalsIgnoreCase("t2") || 
-                    pedido.equalsIgnoreCase("m1")){
-                
-                    //Precio de venta unitario = coste de producción + 65 % del coste de producción
-                    precioVentaUnit = costeProduccion + (costeProduccion*0.65);
-                    Math.round(precioVentaUnit * 10);
-                    JOptionPane.showMessageDialog(null, "PRECIO VENTA POR UNIDAD "+precioVentaUnit);
+                    }
+                    case "P1" -> {
+                        costeManoObra = 0.22;
+                        costeProduccion = materiaPrima + costeManoObra;
+                        precioVentaUnit = costeProduccion + (costeProduccion * 0.5);
+                        JOptionPane.showMessageDialog(null, 
+                                "PRECIO VENTA POR UNIDAD " + String.format("%.2f", precioVentaUnit));
+                        JOptionPane.showMessageDialog(null, 
+                                "COSTE DE PRODUCCIÓN " + String.format("%.2f", costeProduccion));
+                        //CALCULO PARA LLEGAR A LOS 2500
+                        unidadesBeneficio = 2500 / precioVentaUnit;
+                        JOptionPane.showMessageDialog(null, 
+                                "PARA LLEGAR A LOS 2500€ DEBES VENDER " + Math.ceil(unidadesBeneficio) + " UNIDADES");
+
+                    }
+                    case "T1" -> {
+                        costeManoObra = 0.15;
+                        costeProduccion = materiaPrima + costeManoObra;
+                        precioVentaUnit = costeProduccion + (costeProduccion * 0.65);
+                        JOptionPane.showMessageDialog(null, 
+                                "PRECIO VENTA POR UNIDAD " + String.format("%.2f", precioVentaUnit));
+                        JOptionPane.showMessageDialog(null, 
+                                "COSTE DE PRODUCCIÓN " + String.format("%.2f", costeProduccion));
+                        //CALCULO PARA LLEGAR A LOS 2500
+                        unidadesBeneficio = 2500 / precioVentaUnit;
+                        JOptionPane.showMessageDialog(null, 
+                                "PARA LLEGAR A LOS 2500€ DEBES VENDER " + Math.ceil(unidadesBeneficio) + " UNIDADES");
+
+                    }
+                    case "T2" -> {
+                        costeManoObra = 0.22;
+                        costeProduccion = materiaPrima + costeManoObra;
+                        precioVentaUnit = costeProduccion + (costeProduccion * 0.65);
+                        JOptionPane.showMessageDialog(null, 
+                                "PRECIO VENTA POR UNIDAD " + String.format("%.2f", precioVentaUnit));
+                        JOptionPane.showMessageDialog(null, 
+                                "COSTE DE PRODUCCIÓN " + String.format("%.2f", costeProduccion));
+                        //CALCULO PARA LLEGAR A LOS 2500
+                        unidadesBeneficio = 2500 / precioVentaUnit;
+                        JOptionPane.showMessageDialog(null, 
+                                "PARA LLEGAR A LOS 2500€ DEBES VENDER " + Math.ceil(unidadesBeneficio) + " UNIDADES");
+
+                    }
+                    case "M2" -> {
+                        costeManoObra = 0.22;
+                        costeProduccion = materiaPrima + costeManoObra;
+                        precioVentaUnit = costeProduccion + (costeProduccion * 0.5);
+                        JOptionPane.showMessageDialog(null, 
+                                "PRECIO VENTA POR UNIDAD " + String.format("%.2f", precioVentaUnit));
+                        JOptionPane.showMessageDialog(null, 
+                                "COSTE DE PRODUCCIÓN " + String.format("%.2f", costeProduccion));
+                        //CALCULO PARA LLEGAR A LOS 2500
+                        unidadesBeneficio = 2500 / precioVentaUnit;
+                        JOptionPane.showMessageDialog(null, 
+                                "PARA LLEGAR A LOS 2500€ DEBES VENDER " + Math.ceil(unidadesBeneficio) + " UNIDADES");
+
+                    }
+
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                        "LA MATERIA DEBE ESTAR ENTRE 0.1 Y 1");
             }
-            
-            
-            
-            
-            
-            
         } else {
-            JOptionPane.showMessageDialog(null, "LA MATERIA DEBE ESTAR ENTRE 0.1 Y 1");
+
+            JOptionPane.showMessageDialog(null, 
+                    "DEBE ESCRIBIR EL CÓDIGO IGUAL");
+
         }
 
     }
+
 }
