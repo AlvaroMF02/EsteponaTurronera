@@ -11,11 +11,10 @@ public class EsteponaTurronera {
 
     public static void main(String[] args) {
         //NO MUESTRA EL MENU DE PRODUCTOS AL REPETIRSE EL PROGRAMA
-        
-        
+        //SE CREAN BUCLES EN LA MATERIA PRIMA Y EN LA MANO DE OBRA
+
         //VARIABLES
         String opcPrimerMenu = "";
-        double materiaPrima = 0.0;
 
         do {
             //MOSTRAR MENU INICIAL
@@ -26,9 +25,6 @@ public class EsteponaTurronera {
 
             //FILTRAR CODIGOS
             filtrarCodigosPrimerMenu(opcPrimerMenu);
-
-            //LEER MATERIA PRIMA
-            materiaPrima = leerMateriaPrima(materiaPrima);
 
         } while (!opcPrimerMenu.equalsIgnoreCase("salir"));
 
@@ -58,20 +54,56 @@ public class EsteponaTurronera {
 
     //FILTRAR CODIGOS
     public static String filtrarCodigosPrimerMenu(String eleccion) {
+        String codigo = "";
+        double materiaPrima = 0.0;
+        double manoObra = 0.0;
+        double costeProduccion = 0.0;
+        double precioUnitario = 0.0;
+        double unidadesAVender = 0.0;
+        String resultado = """
+      **********************************
+                     TOTAL
+       -> PRECIO VENTA UNIDAD: %.2f
+       -> COSTE DE PRODUCCIÓN: %.2f
+       -> PARA LLEGAR A 2500€ SE DEBEN VENDER %.2f
+      **********************************
+      """.formatted(precioUnitario, costeProduccion, unidadesAVender);
 
         eleccion = eleccion.toLowerCase();
+
         switch (eleccion) {
             case "iniciar":
-                String codigo = "";
+
                 System.out.println("\nINICIO DEL PROGRAMA");
                 //MENU PRODUCTOS
                 mostrarMenuProductos();
-                //LEER CODIGO
+                //LEER CODIGO PRODUCTOS
                 do {
                     codigo = leerCodigoProducto(codigo);
                     //FILTRAR CODIGO
                 } while (!filtrarCodigosMenu(codigo));
 
+                //LECTURA DE LA MATERIA PRIMA 
+                materiaPrima = leerMateriaPrima(materiaPrima);
+                //FILTRADO DE LA MATERIA PRIMA             HAY QUE FILTRAR AQUI O SE REPETIRA SIEMPRE
+                filtrarMateriaPrima(materiaPrima);
+
+                //LECTURA DE LA MANO DE OBRA
+                manoObra = leerManoDeObra(manoObra);
+                //FILTRADO DE LA MANO DE OBRA             HAY QUE FILTRAR AQUI O SE REPETIRA SIEMPRE
+                filtrarManoDeObra(manoObra);
+
+                //CALCULAR COSTE DE PRODUCCION
+                costeProduccion = calcCosteProduccion(materiaPrima, manoObra);
+
+                //CALCULAR PRECIO VENTA UNITARIA
+                precioUnitario = calcPrecioVentaUnit(costeProduccion, codigo);
+
+                //CALCULAR UNIDADES A VENDER SI QUIERO GANAR 2500€
+                unidadesAVender = calcBeneficio(precioUnitario, costeProduccion);
+
+                //SALIDA DE LOS DATOS
+                System.out.println(resultado);
                 break;
 
             case "salir":
@@ -108,15 +140,15 @@ public class EsteponaTurronera {
     }
 
     //FILTRAR CODIGOS PRODUCTOS
-    public static boolean filtrarCodigosMenu(String producto) {
+    public static boolean filtrarCodigosMenu(String codigo) {
         boolean repetir = false;
 
-        if (producto.equalsIgnoreCase("m1")
-                || producto.equalsIgnoreCase("p1")
-                || producto.equalsIgnoreCase("t1")
-                || producto.equalsIgnoreCase("t2")
-                || producto.equalsIgnoreCase("m2")) {
-            System.out.println("EL CÓDIGO ESTA BIEN ESCRITO :)\n");
+        if (codigo.equalsIgnoreCase("m1")
+                || codigo.equalsIgnoreCase("p1")
+                || codigo.equalsIgnoreCase("t1")
+                || codigo.equalsIgnoreCase("t2")
+                || codigo.equalsIgnoreCase("m2")) {
+            System.out.println("\n");
             repetir = true;
 
         } else {
@@ -131,30 +163,100 @@ public class EsteponaTurronera {
 
     //LEER MATERIA PRIMA
     public static double leerMateriaPrima(double materiaPrima) {
-        teclado.nextLine();
         boolean repetir = true;
-
         do {
             try {
-                
+
                 System.out.println("\nINDIQUE EL COSTE DE LA MATERIA PRIMA");
                 materiaPrima = teclado.nextDouble();
-                
                 repetir = false;
-                
+
             } catch (InputMismatchException ime) {
                 teclado.nextLine();
-                System.out.println("ESCRIBE UN NÚMERO CATETO");
+                System.out.println("ESCRIBA BIEN LA MATERIA PRIMA");
             }
-            
+
         } while (repetir);
 
         return materiaPrima;
     }
+
     //FILTRAR MATERIA PRIMA
+    public static double filtrarMateriaPrima(double materiaPrima) {
+        do {
+            leerMateriaPrima(materiaPrima);
+            //AVISO PARA PONER BIEN LA MATERIA
+            if (materiaPrima < 0.1 || materiaPrima > 1) {
+                System.out.println("LA MATERIA DEBE ESTAR ENTRE 0.1 Y 1");
+            }
+        } while (materiaPrima < 0.1 || materiaPrima > 1);
+
+        return materiaPrima;
+    }
+
     //LEER MANO DE OBRA
+    public static double leerManoDeObra(double manoObra) {
+        boolean repetir = true;
+        do {
+            try {
+
+                System.out.println("\nINDIQUE EL COSTE DE LA MANO DE OBRA");
+                manoObra = teclado.nextDouble();
+                repetir = false;
+
+            } catch (InputMismatchException ime) {
+                teclado.nextLine();
+                System.out.println("DEBES ESCRIBIR NUMEROS");
+            }
+
+        } while (repetir);
+
+        return manoObra;
+    }
+
     //FILTRAR MANO DE OBRA
+    public static double filtrarManoDeObra(double manoObra) {
+        do {
+            leerManoDeObra(manoObra);
+            //AVISO PARA PONER BIEN LA MANO DE OBRA
+            if (manoObra < 0.5 || manoObra > 0.9) {
+                System.out.println("LA MANO DE OBRA DEBE ESTAR ENTRE 0.5 Y 9");
+            }
+        } while (manoObra < 0.5 || manoObra > 0.9);
+
+        return manoObra;
+    }
+
     //CALCULAR COSTE PRODUCCION
+    public static double calcCosteProduccion(double matPrima, double manoObra) {
+        double costeProduccion;
+
+        costeProduccion = matPrima + manoObra;
+
+        return costeProduccion;
+    }
+
     //CALCULAR PRECIO VENTA UNITARIA
+    public static double calcPrecioVentaUnit(double costeProduc, String codigo) {
+        double precioVentaUnit;
+        if (codigo.equalsIgnoreCase("M1")
+                || codigo.equalsIgnoreCase("T1")
+                || codigo.equalsIgnoreCase("M2")) {
+
+            precioVentaUnit = costeProduc + (costeProduc * 0.5);
+        } else {
+            precioVentaUnit = costeProduc + (costeProduc * 0.65);
+        }
+        return precioVentaUnit;
+    }
+
     //CALCULAR UNIDADES BENEFICIO
+    public static double calcBeneficio(double precVentaUnit, double costeProduc) {
+        double cantidadVender;
+
+        cantidadVender = 2500 / (precVentaUnit - costeProduc);
+
+        return cantidadVender;
+    }
+
 }
