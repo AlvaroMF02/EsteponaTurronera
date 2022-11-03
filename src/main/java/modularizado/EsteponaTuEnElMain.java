@@ -10,11 +10,10 @@ import java.util.Scanner;
 public class EsteponaTuEnElMain {
 
     public static void main(String[] args) {
-        //METER TODO EN EL MAIN, CAMBIAR EL FILTRAR MENU SE CREA UN BUCLE
-        
+
         //VARIABLES
         String opcPrimerMenu = "";
-         String codigo = "";
+        String codigo = "";
         double materiaPrima = 0.0;
         double manoObra = 0.0;
         double costeProduccion;
@@ -29,43 +28,44 @@ public class EsteponaTuEnElMain {
             opcPrimerMenu = leerCodigos(opcPrimerMenu);
 
             //FILTRAR CODIGOS
-            filtrarCodigosPrimerMenu(opcPrimerMenu);
+            filtrarCodigosMenu(opcPrimerMenu);
 
-            switch (opcPrimerMenu) {
-            case "iniciar":
+            if (!opcPrimerMenu.equalsIgnoreCase("salir")) {
 
-                System.out.println("\nINICIO DEL PROGRAMA");
-                //MENU PRODUCTOS
-                mostrarMenuProductos();
-                //LECTURA Y FILTRADO DEL CODIGO
-                do {
-                    codigo = leerCodigoProducto(codigo);
-                    
-                } while (!filtrarCodigosMenu(codigo));
+                switch (opcPrimerMenu) {
+                    case "iniciar":
 
-                if (!codigo.equalsIgnoreCase("salir")) {
-                    //LECTURA Y FILTRADO DE LA MATERIA PRIMA
-                    do {
-                        materiaPrima = leerMateriaPrima(materiaPrima);
-                        filtrarMateriaPrima(materiaPrima);
-                    } while (materiaPrima < 0.1 || materiaPrima > 1);
+                        //MENU PRODUCTOS
+                        mostrarMenuProductos();
+                        
+                        //LECTURA Y FILTRADO DEL CODIGO
+                        do {
+                            codigo = leerCodigoProducto(codigo);
 
-                    //LECTURA Y FILTRADO DE LA MANO DE OBRA
-                    do {
-                        manoObra = leerManoDeObra(manoObra);
-                        filtrarManoDeObra(manoObra);
-                    } while (manoObra < 0.5 || manoObra > 0.9);
+                        } while (!filtrarCodigosMenu(codigo));
 
-                    //CALCULAR COSTE DE PRODUCCION
-                    costeProduccion = calcCosteProduccion(materiaPrima, manoObra);
+                            //LECTURA Y FILTRADO DE LA MATERIA PRIMA
+                            do {
+                                materiaPrima = leerMateriaPrima(materiaPrima);
+                                filtrarMateriaPrima(materiaPrima);
+                            } while (materiaPrima < 0.1 || materiaPrima > 1);
 
-                    //CALCULAR PRECIO VENTA UNITARIA
-                    precioUnitario = calcPrecioVentaUnit(costeProduccion, codigo);
+                            //LECTURA Y FILTRADO DE LA MANO DE OBRA
+                            do {
+                                manoObra = leerManoDeObra(manoObra);
+                                filtrarManoDeObra(manoObra);
+                            } while (manoObra < 0.5 || manoObra > 0.9);
 
-                    //CALCULAR UNIDADES A VENDER SI QUIERO GANAR 2500€
-                    unidadesAVender = calcBeneficio(precioUnitario, 
-                            costeProduccion);
-                    String resultado = """
+                            //CALCULAR COSTE DE PRODUCCION
+                            costeProduccion = calcCosteProduccion(materiaPrima, manoObra);
+
+                            //CALCULAR PRECIO VENTA UNITARIA
+                            precioUnitario = calcPrecioVentaUnit(costeProduccion, codigo);
+
+                            //CALCULAR UNIDADES A VENDER SI QUIERO GANAR 2500€
+                            unidadesAVender = calcBeneficio(precioUnitario,
+                                    costeProduccion);
+                            String resultado = """
                   **********************************
                                  TOTAL
                    -> PRECIO VENTA UNIDAD: %.2f
@@ -73,32 +73,30 @@ public class EsteponaTuEnElMain {
                    -> PARA LLEGAR A 2500€ SE DEBEN VENDER %.2f
                   **********************************
       """.formatted(precioUnitario, costeProduccion, unidadesAVender);
-                    //SALIDA DE LOS DATOS
-                    System.out.println(resultado);
-                    teclado.nextLine();
-                } else {
-                    System.out.println("SALIDA DEL PROGRAMA\n");
-                    //AQUI TIENE QUE SALIR DEL BUCLE DEL TODO, CON EL CASE SALIR O NO SE
+                            //SALIDA DE LOS DATOS
+                            System.out.println(resultado);
 
+                        break;
+
+                    case "salir":
+                        System.out.println("FÍN DEL PROGRAMA");
+                        break;
+                    default:
+                        System.out.println("ESCRIBA (INICIAR) O (SALIR)\n");
                 }
-                break;
+                
+            } else {
+                System.out.println("SALIDA DEL PROGRAMA");
+            }
 
-            case "salir":
-                System.out.println("FÍN DEL PROGRAMA");
-                break;
-            default:
-                System.out.println("ESCRIBA (INICIAR) O (SALIR)\n");
-        }
-            
-        } while (!opcPrimerMenu.equalsIgnoreCase("salir")&& 
-                (!codigo.equalsIgnoreCase("salir")));
+        } while (!opcPrimerMenu.equalsIgnoreCase("salir")
+                && (!codigo.equalsIgnoreCase("salir")));
 
     }
 
     //**************************************************************************
     //                              METODOS
     //**************************************************************************
-    
     private static Scanner teclado = new Scanner(System.in);
 
     //MOSTRAR MENU INICIAL
@@ -115,20 +113,13 @@ public class EsteponaTuEnElMain {
     //LEER CODIGOS
     public static String leerCodigos(String eleccion) {
         eleccion = teclado.nextLine();
+        eleccion = eleccion.toLowerCase();
         return eleccion;
     }
 
     //FILTRAR CODIGOS
     public static String filtrarCodigosPrimerMenu(String eleccion) {
-        eleccion = eleccion.toLowerCase();
-        do {
-            if (!eleccion.equalsIgnoreCase("iniciar" ) || 
-                !eleccion.equalsIgnoreCase("salir" )){
-                System.out.println("ESCRIBA (INICIAR) O (SALIR)");
-            }
-            
-        } while (!eleccion.equalsIgnoreCase("iniciar" ) || 
-                !eleccion.equalsIgnoreCase("salir" ));
+       
 
         return eleccion;
     }
