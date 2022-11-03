@@ -7,13 +7,19 @@ import java.util.Scanner;
  *
  * @author alvaro
  */
-public class EsteponaTurronera {
+public class EsteponaTuEnElMain {
 
     public static void main(String[] args) {
-        //LAS CUENTAS NO FUNCIONAN O EL RESULTADO SE IMPRIME MAL
-
+        //METER TODO EN EL MAIN, CAMBIAR EL FILTRAR MENU SE CREA UN BUCLE
+        
         //VARIABLES
         String opcPrimerMenu = "";
+         String codigo = "";
+        double materiaPrima = 0.0;
+        double manoObra = 0.0;
+        double costeProduccion;
+        double precioUnitario;
+        double unidadesAVender;
 
         do {
             //MOSTRAR MENU INICIAL
@@ -25,44 +31,7 @@ public class EsteponaTurronera {
             //FILTRAR CODIGOS
             filtrarCodigosPrimerMenu(opcPrimerMenu);
 
-        } while (!opcPrimerMenu.equalsIgnoreCase("salir"));
-
-    }
-
-    //**************************************************************************
-    //                              METODOS
-    //**************************************************************************
-    private static Scanner teclado = new Scanner(System.in);
-
-    //MOSTRAR MENU INICIAL
-    public static void mostrarMenuPrincipal() {
-        String menu = """
-                      **********************************
-                                -> (INICIAR) <-
-                                 -> (SALIR) <-
-                      **********************************
-                      """;
-        System.out.println(menu);
-    }
-
-    //LEER CODIGOS
-    public static String leerCodigos(String eleccion) {
-        eleccion = teclado.nextLine();
-        return eleccion;
-    }
-
-    //FILTRAR CODIGOS     //CASI TODOS LOS METODOS ESTAN AQUI
-    public static String filtrarCodigosPrimerMenu(String eleccion) {
-        String codigo = "";
-        double materiaPrima = 0.0;
-        double manoObra = 0.0;
-        double costeProduccion;
-        double precioUnitario;
-        double unidadesAVender;
-
-        eleccion = eleccion.toLowerCase();
-
-        switch (eleccion) {
+            switch (opcPrimerMenu) {
             case "iniciar":
 
                 System.out.println("\nINICIO DEL PROGRAMA");
@@ -120,6 +89,46 @@ public class EsteponaTurronera {
             default:
                 System.out.println("ESCRIBA (INICIAR) O (SALIR)\n");
         }
+            
+        } while (!opcPrimerMenu.equalsIgnoreCase("salir")&& 
+                (!codigo.equalsIgnoreCase("salir")));
+
+    }
+
+    //**************************************************************************
+    //                              METODOS
+    //**************************************************************************
+    
+    private static Scanner teclado = new Scanner(System.in);
+
+    //MOSTRAR MENU INICIAL
+    public static void mostrarMenuPrincipal() {
+        String menu = """
+                      **********************************
+                                -> (INICIAR) <-
+                                 -> (SALIR) <-
+                      **********************************
+                      """;
+        System.out.println(menu);
+    }
+
+    //LEER CODIGOS
+    public static String leerCodigos(String eleccion) {
+        eleccion = teclado.nextLine();
+        return eleccion;
+    }
+
+    //FILTRAR CODIGOS
+    public static String filtrarCodigosPrimerMenu(String eleccion) {
+        eleccion = eleccion.toLowerCase();
+        do {
+            if (!eleccion.equalsIgnoreCase("iniciar" ) || 
+                !eleccion.equalsIgnoreCase("salir" )){
+                System.out.println("ESCRIBA (INICIAR) O (SALIR)");
+            }
+            
+        } while (!eleccion.equalsIgnoreCase("iniciar" ) || 
+                !eleccion.equalsIgnoreCase("salir" ));
 
         return eleccion;
     }
