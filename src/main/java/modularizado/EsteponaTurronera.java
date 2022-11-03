@@ -10,7 +10,8 @@ import java.util.Scanner;
 public class EsteponaTurronera {
 
     public static void main(String[] args) {
-        //LAS CUENTAS NO FUNCIONAN O EL RESULTADO SE IMPRIME MAL
+        //COMO ESTA HECHO NO PUEDO SALIR DEL SEGUNDO MENÚ, SIMPLEMENTE VUELVE
+        //AL PRIMER MENÚ
 
         //VARIABLES
         String opcPrimerMenu = "";
@@ -96,21 +97,23 @@ public class EsteponaTurronera {
                     //CALCULAR UNIDADES A VENDER SI QUIERO GANAR 2500€
                     unidadesAVender = calcBeneficio(precioUnitario, 
                             costeProduccion);
-                    String resultado = """
-                  **********************************
-                                 TOTAL
-                   -> PRECIO VENTA UNIDAD: %.2f
-                   -> COSTE DE PRODUCCIÓN: %.2f
-                   -> PARA LLEGAR A 2500€ SE DEBEN VENDER %.2f
-                  **********************************
-      """.formatted(precioUnitario, costeProduccion, unidadesAVender);
+                     String resultado = """
+                                      *********************************************
+                                                     TOTAL
+                                       -> PRECIO VENTA UNIDAD: %.2f
+                                       -> COSTE DE PRODUCCIÓN: %.2f
+                                       -> PARA LLEGAR A 2500€ SE DEBEN VENDER %.2f
+                                      *********************************************
+                                      """.formatted(precioUnitario, 
+                                              costeProduccion, 
+                                              unidadesAVender);
                     //SALIDA DE LOS DATOS
                     System.out.println(resultado);
                     teclado.nextLine();
                 } else {
-                    System.out.println("SALIDA DEL PROGRAMA\n");
+                    System.out.println("SALIDA DEL MENÚ\n");
                     //AQUI TIENE QUE SALIR DEL BUCLE DEL TODO, CON EL CASE SALIR O NO SE
-
+                    break;
                 }
                 break;
 
@@ -155,7 +158,8 @@ public class EsteponaTurronera {
                 || codigo.equalsIgnoreCase("p1")
                 || codigo.equalsIgnoreCase("t1")
                 || codigo.equalsIgnoreCase("t2")
-                || codigo.equalsIgnoreCase("m2")) {
+                || codigo.equalsIgnoreCase("m2")
+                || codigo.equalsIgnoreCase("salir")) {
             System.out.println("\n");
             repetir = true;
 
